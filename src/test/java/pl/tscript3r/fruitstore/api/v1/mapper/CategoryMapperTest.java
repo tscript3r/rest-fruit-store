@@ -4,7 +4,7 @@ import org.junit.Test;
 import pl.tscript3r.fruitstore.api.v1.model.CategoryDTO;
 import pl.tscript3r.fruitstore.domain.Category;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class CategoryMapperTest {
 

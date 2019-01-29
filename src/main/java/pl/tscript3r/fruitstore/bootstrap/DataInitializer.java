@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import pl.tscript3r.fruitstore.domain.Category;
 import pl.tscript3r.fruitstore.repositories.CategoryRepository;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Slf4j
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -17,28 +20,14 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
+        List<Category> categories = Arrays.asList(Category.builder().name("Fruits").build(),
+                Category.builder().name("Dried").build(),
+                Category.builder().name("Fresh").build(),
+                Category.builder().name("Exotic").build(),
+                Category.builder().name("Nuts").build());
 
-        Category fruits = new Category();
-        fruits.setName("Fruits");
-
-        Category dried = new Category();
-        fruits.setName("Dried");
-
-        Category fresh = new Category();
-        fruits.setName("Fresh");
-
-        Category exotic = new Category();
-        fruits.setName("Exotic");
-
-        Category nuts = new Category();
-        fruits.setName("Nuts");
-
-        categoryRepository.save(fruits);
-        categoryRepository.save(dried);
-        categoryRepository.save(fresh);
-        categoryRepository.save(exotic);
-        categoryRepository.save(nuts);
+        categories.forEach(categoryRepository::save);
 
         log.debug("Bootstrap data initialized");
     }
