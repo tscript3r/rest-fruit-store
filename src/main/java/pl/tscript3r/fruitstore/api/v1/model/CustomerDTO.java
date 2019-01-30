@@ -1,16 +1,16 @@
 package pl.tscript3r.fruitstore.api.v1.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryListDTO {
-
-    private List<CategoryDTO> categories;
-
+public class CustomerDTO {
+    private String firstname;
+    private String lastname;
+    private String customerUrl;
 }
