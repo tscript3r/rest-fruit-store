@@ -9,7 +9,6 @@ import pl.tscript3r.fruitstore.repositories.CategoryRepository;
 import pl.tscript3r.fruitstore.repositories.CustomerRepository;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 @Component

@@ -9,4 +9,5 @@ import pl.tscript3r.fruitstore.domain.Customer;
 public interface CustomerMapper {
     CustomerMapper INSTANCE = Mappers.getMapper(CustomerMapper.class);
     CustomerDTO customerToCustomerDTO(Customer customer);
+    Customer customerDTOToCustomer(CustomerDTO customerDTO);
 }
