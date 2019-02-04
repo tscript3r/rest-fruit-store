@@ -1,7 +1,6 @@
 package pl.tscript3r.fruitstore.controllers.v1;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.tscript3r.fruitstore.api.v1.model.CustomerDTO;
 import pl.tscript3r.fruitstore.api.v1.model.CustomerListDTO;

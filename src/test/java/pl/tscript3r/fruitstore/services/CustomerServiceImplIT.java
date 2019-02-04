@@ -12,6 +12,7 @@ import pl.tscript3r.fruitstore.bootstrap.DataInitializer;
 import pl.tscript3r.fruitstore.domain.Customer;
 import pl.tscript3r.fruitstore.repositories.CategoryRepository;
 import pl.tscript3r.fruitstore.repositories.CustomerRepository;
+import pl.tscript3r.fruitstore.repositories.VendorRepository;
 
 import java.util.List;
 
@@ -31,11 +32,14 @@ public class CustomerServiceImplIT {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    VendorRepository vendorRepository;
+
     CustomerService customerService;
 
     @Before
     public void setUp() {
-        DataInitializer dataInitializer = new DataInitializer(categoryRepository, customerRepository);
+        DataInitializer dataInitializer = new DataInitializer(categoryRepository, customerRepository, vendorRepository);
         dataInitializer.run();
 
         customerService = new CustomerServiceImpl(CustomerMapper.INSTANCE, customerRepository);
