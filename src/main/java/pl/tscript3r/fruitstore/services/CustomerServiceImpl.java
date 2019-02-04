@@ -3,7 +3,9 @@ package pl.tscript3r.fruitstore.services;
 import org.springframework.stereotype.Service;
 import pl.tscript3r.fruitstore.api.v1.mapper.CustomerMapper;
 import pl.tscript3r.fruitstore.api.v1.model.CustomerDTO;
+import pl.tscript3r.fruitstore.controllers.v1.CustomerController;
 import pl.tscript3r.fruitstore.domain.Customer;
+import pl.tscript3r.fruitstore.exceptions.ResourceNotFoundException;
 import pl.tscript3r.fruitstore.repositories.CustomerRepository;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .stream()
                 .map(customer -> {
                     CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(customer);
-                    customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
+                    customerDTO.setCustomerUrl(getCustomerUrl(customer.getId()));
                     return customerDTO;
                 })
                 .collect(Collectors.toList());
@@ -37,16 +39,16 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(id)
                 .map(customerMapper::customerToCustomerDTO)
                 .map(customerDTO -> {
-                    customerDTO.setCustomerUrl("/api/v1/customer/" + id);
+                    customerDTO.setCustomerUrl(getCustomerUrl(id));
                     return customerDTO;
                 })
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
     }
 
     private CustomerDTO saveAndReturnCustomerDTO(Customer customer) {
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO customerDTO = customerMapper.customerToCustomerDTO(savedCustomer);
-        customerDTO.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+        customerDTO.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
         return customerDTO;
     }
 
@@ -60,5 +62,30 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
         customer.setId(id);
         return saveAndReturnCustomerDTO(customer);
+    }
+
+    @Override
+    public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
+        return customerRepository.findById(id).map(customer -> {
+
+            if(customerDTO.getFirstname() != null)
+                customer.setFirstname(customerDTO.getFirstname());
+            if(customerDTO.getLastname() != null)
+                customer.setLastname(customerDTO.getLastname());
+
+            CustomerDTO returnedCustomerDTO = customerMapper.customerToCustomerDTO(customer);
+
+            returnedCustomerDTO.setCustomerUrl(getCustomerUrl(customer.getId()));
+            return returnedCustomerDTO;
+        }).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public void deleteCustomerById(Long id) {
+        customerRepository.deleteById(id);
+    }
+
+    private String getCustomerUrl(Long id) {
+        return CustomerController.BASE_URL + id;
     }
 }

@@ -16,7 +16,9 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 public class CustomerServiceImplTest {
 
@@ -24,6 +26,8 @@ public class CustomerServiceImplTest {
     public static final String FIRSTNAME = "A";
     public static final String LASTNAME = "B";
     public static final String CUSTOMER_URL = "/api/v1/customer/";
+    public static final String LASTNAME_PATHED = "Y";
+    public static final String FIRSTNAME_PATHED = "U";
     private CustomerService customerService;
 
     @Mock
@@ -92,5 +96,21 @@ public class CustomerServiceImplTest {
         assertEquals("/api/v1/customer/1", savedDTO.getCustomerUrl());
     }
 
+    @Test
+    public void pathCustomer() {
+        Customer customer = Customer.builder().firstname(FIRSTNAME).lastname(LASTNAME).id(ID).build();
+        CustomerDTO customerDTO = CustomerDTO.builder().lastname(LASTNAME_PATHED).firstname(FIRSTNAME_PATHED).build();
+        when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
+        CustomerDTO returnedCustomerDTO = customerService.patchCustomer(ID, customerDTO);
+        assertEquals(customerDTO.getFirstname(), returnedCustomerDTO.getFirstname());
+        assertEquals(customerDTO.getLastname(), returnedCustomerDTO.getLastname());
+    }
+
+    @Test
+    public void deleteCustomer() {
+        Long id = 1L;
+        customerRepository.deleteById(id);
+        verify(customerRepository, times(1)).deleteById(anyLong());
+    }
 
 }
