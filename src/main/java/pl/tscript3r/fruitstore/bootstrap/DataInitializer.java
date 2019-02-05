@@ -32,10 +32,10 @@ public class DataInitializer implements CommandLineRunner {
         // Adding categories
         categoryRepository.saveAll(
                 Arrays.asList(Category.builder().name("Fruits").build(),
-                    Category.builder().name("Dried").build(),
-                    Category.builder().name("Fresh").build(),
-                    Category.builder().name("Exotic").build(),
-                    Category.builder().name("Nuts").build())
+                        Category.builder().name("Dried").build(),
+                        Category.builder().name("Fresh").build(),
+                        Category.builder().name("Exotic").build(),
+                        Category.builder().name("Nuts").build())
         );
 
         // Adding users

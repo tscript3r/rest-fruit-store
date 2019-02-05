@@ -10,7 +10,7 @@ import pl.tscript3r.fruitstore.services.CategoryService;
 @RequestMapping(CategoryController.BASE_URL)
 public class CategoryController {
 
-    public static final String BASE_URL = "/api/v1/categories/";
+    public static final String BASE_URL = "/api/v1/category/";
 
     private final CategoryService categoryService;
 

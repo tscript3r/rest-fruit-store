@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import pl.tscript3r.fruitstore.exceptions.ResourceExistsException;
 import pl.tscript3r.fruitstore.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
@@ -14,7 +15,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<Object> handleNotFound(Exception exception, WebRequest request) {
-
         return new ResponseEntity<>("Resource not found", new HttpHeaders(), HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler({ResourceExistsException.class})
+    public ResponseEntity<Object> handleFound(Exception exception, WebRequest request) {
+        return new ResponseEntity<>("Resource already exists", new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
 }

@@ -14,15 +14,12 @@ public class CategoryMapperTest {
 
     @Test
     public void categoryToCategoryDTO() {
-        //given
         Category category = new Category();
         category.setName(NAME);
         category.setId(ID);
 
-        // when
         CategoryDTO categoryDTO = categoryMapper.categoryToCategoryDTO(category);
 
-        // then
         assertEquals(Long.valueOf(ID), categoryDTO.getId());
         assertEquals(NAME, categoryDTO.getName());
     }

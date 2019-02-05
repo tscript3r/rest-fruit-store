@@ -8,5 +8,6 @@ import pl.tscript3r.fruitstore.domain.Category;
 @Mapper
 public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
+
     CategoryDTO categoryToCategoryDTO(Category category);
 }
