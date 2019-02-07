@@ -60,8 +60,7 @@ public class VendorServiceImpl implements VendorService {
             if (vendorDTO.getVendorUrl() != null)
                 vendor.setVendorUrl(vendorDTO.getVendorUrl());
 
-            VendorDTO returnedVendorDTO = vendorMapper.vendorToVendorDTO(vendor);
-            return returnedVendorDTO;
+            return vendorMapper.vendorToVendorDTO(vendor);
         }).orElseThrow(ResourceNotFoundException::new);
     }
 
