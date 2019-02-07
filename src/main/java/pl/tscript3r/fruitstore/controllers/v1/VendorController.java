@@ -1,11 +1,14 @@
 package pl.tscript3r.fruitstore.controllers.v1;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.tscript3r.fruitstore.api.v1.model.VendorDTO;
 import pl.tscript3r.fruitstore.api.v1.model.VendorListDTO;
 import pl.tscript3r.fruitstore.services.VendorService;
 
+@Api(description = "Hardcore vendor controller }:-)")
 @RestController
 @RequestMapping(VendorController.BASE_URL)
 public class VendorController {
@@ -23,6 +26,7 @@ public class VendorController {
     public VendorListDTO getAllVendors() {
         return new VendorListDTO(vendorService.getAllVendors());
     }
+
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -48,6 +52,8 @@ public class VendorController {
         return vendorService.patchVendor(id, vendorDTO);
     }
 
+    @ApiOperation(value = "This operation deletes the vendor by the given ID",
+            notes = "Be aware, that it deletes an vendor :o")
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteVendor(@PathVariable Long id) {
